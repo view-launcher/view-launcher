@@ -1,6 +1,6 @@
 import Mousetrap from 'mousetrap'
 import { Editor, editorUrl } from './editorUrl'
-import { closestInspectableElement, html } from './utils'
+import { closestComponent, closestInspectableElement, html } from './utils'
 import { createPopper, Instance as PopperInstance } from '@popperjs/core'
 
 export type Options = {
@@ -21,28 +21,29 @@ export type TagInfo = {
   component?: string
 }
 
-export type ElementHasTagInfo = Element & { tagInfo: TagInfo }
+export type InspectableElement = Element & { tagInfo: TagInfo }
 
-const defaultOptions: Options = {
+export const defaultOptions: Options = {
   theme: 'light',
   editor: 'vscode',
   shortcuts: {
     open: 'd',
     inspect: 'a a',
     inspectComponent: 'c c',
-    inspectParent: 'up',
+    inspectParent: 'e',
   },
 }
 
 export class ElementIndicator {
   private readonly options: Options
   private _enabled = false
+  private inspectComponentOnly = false
   private indicator!: HTMLElement
   private tooltip!: HTMLElement
   private tagInfo!: HTMLElement
   private viewName!: HTMLElement
   private popper!: PopperInstance
-  private element?: ElementHasTagInfo
+  private element?: InspectableElement
   private static instance: ElementIndicator
 
   private constructor(userOptions: Partial<Options>) {
@@ -57,8 +58,10 @@ export class ElementIndicator {
   private createElements() {
     const { theme } = this.options
     const bodyElement = document.body
-    const indicator = html(`<div id="view-launcher-indicator" class="--${theme}"></div>`) as HTMLElement
-    const tooltip = html(`<div id="view-launcher-tooltip" class="--${theme}">
+    const indicator = html(
+      `<div id="view-launcher-indicator" class="--${theme}" style="visibility: hidden"></div>`
+    ) as HTMLElement
+    const tooltip = html(`<div id="view-launcher-tooltip" class="--${theme}" style="visibility: hidden">
 <div class="__tag-info"></div>
 <div class="__view-name"></div>
 </div>`) as HTMLElement
@@ -88,7 +91,7 @@ export class ElementIndicator {
 
   private addEventListeners() {
     const elements = Array.from(document.querySelectorAll('[data-tag-info]')).filter((element) => {
-      ;(element as ElementHasTagInfo).tagInfo = JSON.parse((element as any).dataset.tagInfo)
+      ;(element as InspectableElement).tagInfo = JSON.parse((element as any).dataset.tagInfo)
       element.removeAttribute('data-tag-info')
 
       const invisibleTags = [
@@ -118,7 +121,18 @@ export class ElementIndicator {
           return
         }
 
-        this.setElement(element as ElementHasTagInfo)
+        const isComponent = !!(element as InspectableElement).tagInfo.component
+
+        if (!this.inspectComponentOnly || isComponent) {
+          this.setElement(element as InspectableElement)
+          return
+        }
+
+        const component = closestComponent(element)
+        if (!component) {
+          return
+        }
+        this.setElement(component)
       })
 
       element.addEventListener('mouseleave', (event) => {
@@ -128,7 +142,9 @@ export class ElementIndicator {
           return
         }
 
-        const closestTag = closestInspectableElement(relatedTarget)
+        const closestTag = this.inspectComponentOnly
+          ? closestComponent(relatedTarget)
+          : closestInspectableElement(relatedTarget)
 
         if (closestTag) {
           this.setElement(closestTag)
@@ -141,8 +157,13 @@ export class ElementIndicator {
     const { shortcuts, editor } = this.options
 
     Mousetrap.bind(shortcuts.inspect, () => {
+      this.inspectComponentOnly = false
       this.toggleEnable()
-      document.body.classList.toggle('view-launcher-inspecting')
+    })
+
+    Mousetrap.bind(shortcuts.inspectComponent, () => {
+      this.inspectComponentOnly = true
+      this.toggleEnable()
     })
 
     Mousetrap.bind(shortcuts.open, () => {
@@ -173,9 +194,6 @@ export class ElementIndicator {
 
     Mousetrap.bind('esc', () => {
       this.disable()
-      if (document.body.classList.contains('view-launcher-inspecting')) {
-        document.body.classList.remove('view-launcher-inspecting')
-      }
     })
   }
 
@@ -204,7 +222,7 @@ export class ElementIndicator {
     return (ElementIndicator.instance = instance)
   }
 
-  setElement(element: ElementHasTagInfo) {
+  setElement(element: InspectableElement) {
     this.element = element
     this.show()
     this.update()
@@ -255,6 +273,8 @@ export class ElementIndicator {
       ],
     })
     this.popper.update()
+
+    this.show()
   }
 
   hide() {
@@ -271,13 +291,14 @@ export class ElementIndicator {
 
   enable() {
     this._enabled = true
-    this.update()
-    this.show()
+    document.body.classList.add('view-launcher-inspecting')
   }
 
   disable() {
     this._enabled = false
+    this.element = undefined
     this.hide()
+    document.body.classList.remove('view-launcher-inspecting')
   }
 
   get enabled() {
@@ -289,6 +310,6 @@ export class ElementIndicator {
   }
 
   toggleEnable() {
-    this._enabled ? this.disable() : this.enable()
+    this.enabled ? this.disable() : this.enable()
   }
 }

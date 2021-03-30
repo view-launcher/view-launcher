@@ -1,6 +1,12 @@
-import { ElementHasTagInfo } from './ElementIndicator'
+import { InspectableElement } from './ElementIndicator'
 
-export function closest(element: Element, filter: (element: Element) => boolean): Element | null {
+type ElementFilter<E extends Element = Element> = (element: E) => boolean
+
+export function isInspectableElement(element: Element): element is InspectableElement {
+  return element.hasOwnProperty('tagInfo')
+}
+
+export function closest(element: Element, filter: ElementFilter): Element | null {
   if (!element.parentElement) {
     return null
   }
@@ -12,8 +18,21 @@ export function closest(element: Element, filter: (element: Element) => boolean)
   return element
 }
 
-export function closestInspectableElement(element: Element): ElementHasTagInfo | null {
-  return closest(element, (element) => element.hasOwnProperty('tagInfo')) as ElementHasTagInfo | null
+export function closestInspectableElement(
+  element: Element,
+  filter: ElementFilter<InspectableElement> = () => true
+): InspectableElement | null {
+  return closest(
+    element,
+    (element) => isInspectableElement(element) && filter(element)
+  ) as InspectableElement | null
+}
+
+export function closestComponent(element: Element): InspectableElement | null {
+  return closestInspectableElement(
+    element,
+    (element) => !!element.tagInfo.component
+  ) as InspectableElement | null
 }
 
 export function el(tagName: string): HTMLElement {
