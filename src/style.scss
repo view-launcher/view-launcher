@@ -1,0 +1,95 @@
+#view-launcher-indicator {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+
+  &.--dark {
+    background-color: rgba(38, 50, 56, 0.6);
+  }
+
+  &.--light {
+    background-color: rgb(110, 185, 247, 0.42);
+  }
+}
+
+#view-launcher-tooltip {
+  border-radius: 4px;
+  padding: 0.5em 0.7em;
+
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+  z-index: 100000;
+  max-width: 300px;
+
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+  &.--dark {
+    color: white;
+    background-color: rgba(27, 37, 41, 0.9);
+
+    > .__tag-info {
+      > .__is-component {
+        background-color: #5c8ea7;
+      }
+    }
+
+    > .__view-name {
+      color: #909090;
+    }
+  }
+
+  &.--light {
+    color: #454545;
+    background-color: white;
+    box-shadow: 0 0.4px 2.2px rgba(0, 0, 0, 0.1),
+    0 1.8px 5.3px rgba(0, 0, 0, 0.06),
+    0 5.7px 10px rgba(0, 0, 0, 0.035),
+    0 14.8px 17.9px rgba(0, 0, 0, 0.042),
+    0 35.6px 33.4px rgba(0, 0, 0, 0.05);
+
+    > .__tag-info {
+      > .__is-component {
+        background-color: #8bc34a;
+      }
+    }
+
+    > .__view-name {
+      color: #909090;
+    }
+  }
+
+  > .__tag-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+
+    > .__is-component {
+      display: block;
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      border-radius: 2px;
+      font-size: 10px;
+      position: relative;
+      color: white;
+
+      &::before {
+        content: 'C';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+      }
+    }
+  }
+}
+
+
+body {
+  &:not(.view-launcher-inspecting) {
+    #view-launcher-indicator, #view-launcher-tooltip {
+      visibility: hidden !important;
+    }
+  }
+}
