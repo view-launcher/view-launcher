@@ -4,6 +4,7 @@ const EDITORS = {
   emacs: 'emacs://open?url=file://{path}&line={line}&column={column}',
   macvim: 'mvim://open/?url=file://{path}&line={line}&column={column}',
   phpstorm: 'phpstorm://open?file={path}&line={line}&column={column}',
+  webstorm: 'phpstorm://open?file={path}&line={line}&column={column}',
   idea: 'idea://open?file={path}&line={line}&column={column}',
   vscode: 'vscode://file/{path}:{line}:{column}',
   'vscode-insiders': 'vscode-insiders://file/{path}:{line}:{column}',

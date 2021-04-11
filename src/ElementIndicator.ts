@@ -4,20 +4,64 @@ import { closestComponent, closestInspectableElement, html } from './utils'
 import { createPopper, Instance as PopperInstance } from '@popperjs/core'
 
 export type Options = {
+  /**
+   * The color theme to be used.
+   */
   theme: 'dark' | 'light'
+
+  /**
+   * The editor you'd like to use.
+   */
   editor: Editor
+
+  /**
+   * The shortcuts settings.
+   * see the link below for the possible values.
+   * @link https://github.com/ccampbell/mousetrap
+   */
   shortcuts: {
+    /**
+     * Open the editor.
+     */
     open: string
+
+    /**
+     * Toggle inspect mode.
+     */
     inspect: string
+
+    /**
+     * Toggle inspect mode, but only inspect components.
+     */
     inspectComponent: string
+
+    /**
+     * Inspect the parent element of current inspecting element.
+     */
     inspectParent: string
   }
 }
 
 export type TagInfo = {
+  /**
+   * The absolute path of the view file.
+   */
   view: string
+
+  /**
+   * The line number of the element.
+   */
   line: number
+
+  /**
+   * The column number of the element.
+   */
   column?: number
+
+  /**
+   * If the element is the root element of a component,
+   * set this to the component's name, otherwise undefined.
+   */
   component?: string
 }
 
