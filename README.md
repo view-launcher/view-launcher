@@ -34,6 +34,16 @@ Kind of like a "sourcemap of markup", helps you inspect your view at light speed
 A full demo(for [Vue.js](https://vuejs.org/) using [Vite](https://vitejs.dev/)) can be found at the [playground](https://github.com/view-launcher/view-launcher/tree/master/playground) directory.
 If you'd like to have it a try, just cd into playground run `yarn dev`.
 
+The default shortcuts for inspecting elements are:
+
+| Key   | Action                                                   |
+|-------|----------------------------------------------------------|
+| `A A` | Toggle inspect mode                                      |
+| `C C` | Toggle inspect mode, but only inspect components         |
+| `D`   | Open with your editor(the default setting is VSCode)     |
+| `E`   | Inspect the parent element of current inspecting element |
+
+
 ## 🔰 Usage
 Notice: This is the usage guide for client-side lib of ViewLauncher.  
 For framework specific installation guide see:
