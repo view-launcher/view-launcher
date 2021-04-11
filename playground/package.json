@@ -11,7 +11,7 @@
     "vue": "^3.0.5"
   },
   "devDependencies": {
-    "@view-launcher/rollup-plugin": "^1.1.2",
+    "@view-launcher/rollup-plugin-vue": "^1.1.2",
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
     "vite": "^2.1.3"
