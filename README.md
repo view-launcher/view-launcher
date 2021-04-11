@@ -32,7 +32,7 @@ Kind of like a "sourcemap of markup", helps you inspect your view at light speed
 
 ## Demo
 A full demo(for [Vue.js](https://vuejs.org/) using [Vite](https://vitejs.dev/)) can be found at the [playground](https://github.com/view-launcher/view-launcher/tree/master/playground) directory.
-If you'd like to have it a try, just cd into playground run `yarn dev`.
+If you'd like to have it a try, just cd into `playground` run `yarn dev`.
 
 The default shortcuts for inspecting elements are:
 
