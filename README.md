@@ -12,6 +12,7 @@
 
 ## Table of Contents
 - [Motivation](#motivation)
+- [Demo](#demo)
 - [Usage](#-usage)
 - [Options](#%EF%B8%8F-options)
 - [Supported Editors](#%EF%B8%8F-supported-editors)
@@ -28,6 +29,10 @@ This package provides you a simple way to locate the view file.
 Just click the HTML element from the browser, it'll jump to the view file in your code editor automagically.
 
 Kind of like a "sourcemap of markup", helps you inspect your view at light speed ⚡⚡️️
+
+## Demo
+A full demo(for [Vue.js](https://vuejs.org/) using [Vite](https://vitejs.dev/)) can be found at the [playground](https://github.com/view-launcher/view-launcher/tree/master/playground) directory.
+If you'd like to have it a try, just cd into playground run `yarn dev`.
 
 ## 🔰 Usage
 Notice: This is the usage guide for client-side lib of ViewLauncher.
