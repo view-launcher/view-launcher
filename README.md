@@ -10,11 +10,12 @@
     <img src="https://img.shields.io/badge/</>-TypeScript-blue.svg" alt="TypeScript">
 </div>
 
+## Table of Contents
 - [Motivation](#motivation)
-- [Usage](#usage)
-- [Options](#options)
+- [Usage](#-usage)
+- [Options](#%EF%B8%8F-options)
 - [Supported Editors](#%EF%B8%8F-supported-editors)
-- [How does it work?](#how-does-it-work)
+- [How does it work?](#-how-does-it-work)
 - [Contribution](#contribution)
 
 ## Motivation
