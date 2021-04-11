@@ -32,7 +32,7 @@ Kind of like a "sourcemap of markup", helps you inspect your view at light speed
 ## 🔰 Usage
 Notice: This is the usage guide for client-side lib of ViewLauncher.
 For framework specific installation guide see:
-* [Vue.js](https://github.com/view-launcher/vue-view-launcher)(Rollup/Vite/Webpack)
+* [Vue.js](https://github.com/view-launcher/vue-view-launcher) (Rollup/Vite/Webpack)
 * [Laravel Blade](https://github.com/view-launcher/blade-view-launcher)
 
 You can ignore this if you are using one of the above packages, you are going to have the same option in there.
