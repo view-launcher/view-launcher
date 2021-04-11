@@ -47,8 +47,8 @@ The default shortcuts for inspecting elements are:
 ## 🔰 Usage
 Notice: This is the usage guide for client-side lib of ViewLauncher.  
 For framework specific installation guide see:
-* [Vue.js](https://github.com/view-launcher/vue-view-launcher) (Rollup/Vite/Webpack)
-* [Laravel Blade](https://github.com/view-launcher/blade-view-launcher)
+* [Vue.js](https://github.com/view-launcher/vue) (Rollup/Vite/Webpack)
+* [Laravel Blade](https://github.com/view-launcher/blade)
 
 You can ignore this if you are using one of the above packages, you are going to have the same options in there.
 
