@@ -35,7 +35,7 @@ A full demo(for [Vue.js](https://vuejs.org/) using [Vite](https://vitejs.dev/)) 
 If you'd like to have it a try, just cd into playground run `yarn dev`.
 
 ## 🔰 Usage
-Notice: This is the usage guide for client-side lib of ViewLauncher.
+Notice: This is the usage guide for client-side lib of ViewLauncher.  
 For framework specific installation guide see:
 * [Vue.js](https://github.com/view-launcher/vue-view-launcher) (Rollup/Vite/Webpack)
 * [Laravel Blade](https://github.com/view-launcher/blade-view-launcher)
@@ -128,8 +128,8 @@ An example of the value of `data-tag-info` attribute may look like this:
 }
 ```
 
-ViewLauncher(client-side lib) is going to use the information taken from `data-tag-info` to open the view files.
-The `data-tag-info` attribute should be injected automatically at the compile-time of view file.
+ViewLauncher(client-side lib) is going to use the information taken from `data-tag-info` to open the view files.  
+The `data-tag-info` attribute should be injected automatically at the compile-time of view file.  
 For instance, in the case of Vue-SFC, `data-tag-info` attributes are injected at the load/transform stage of your bundler.
 
 ## Contribution
