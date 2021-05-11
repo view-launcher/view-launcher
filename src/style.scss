@@ -84,12 +84,3 @@
     }
   }
 }
-
-
-body {
-  &:not(.view-launcher-inspecting) {
-    #view-launcher-indicator, #view-launcher-tooltip {
-      visibility: hidden !important;
-    }
-  }
-}

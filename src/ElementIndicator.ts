@@ -124,6 +124,7 @@ export class ElementIndicator {
             offset: [0, 5],
           },
         },
+        { name: 'eventListeners', enabled: false },
       ],
     })
 
@@ -161,10 +162,6 @@ export class ElementIndicator {
 
     elements.forEach((element) => {
       element.addEventListener('mouseenter', () => {
-        if (this.disabled) {
-          return
-        }
-
         const isComponent = !!(element as InspectableElement).tagInfo.component
 
         if (!this.inspectComponentOnly || isComponent) {
@@ -182,7 +179,7 @@ export class ElementIndicator {
       element.addEventListener('mouseleave', (event) => {
         const relatedTarget = (event as MouseEvent).relatedTarget
 
-        if (this.disabled || !(relatedTarget instanceof Element)) {
+        if (!(relatedTarget instanceof Element)) {
           return
         }
 
@@ -243,8 +240,8 @@ export class ElementIndicator {
 
   private keepUpdatingOnEvents() {
     // update on window scroll and resize
-    window.addEventListener('scroll', this.update)
-    window.addEventListener('resize', this.update)
+    window.addEventListener('scroll', this.update.bind(this))
+    window.addEventListener('resize', this.update.bind(this))
 
     // update on document mutation
     const targetNode = document.body
@@ -268,17 +265,18 @@ export class ElementIndicator {
 
   setElement(element: InspectableElement) {
     this.element = element
-    this.show()
+
     this.update()
   }
 
   update() {
-    if (!this.element || this.disabled) {
+    const element = this.element
+    if (!element || this.disabled) {
       return
     }
 
     const indicatorStyle = this.indicator.style
-    const rect = this.element.getBoundingClientRect()
+    const rect = element.getBoundingClientRect()
     const windowHeight = document.documentElement.clientHeight
     const overflowWinBottom = rect.top + rect.height > windowHeight
     const height =
@@ -295,7 +293,6 @@ export class ElementIndicator {
     indicatorStyle.left = rect.left + 'px'
     indicatorStyle.top = (rect.top > 0 ? rect.top : 0) + 'px'
 
-    const element = this.element
     const classes = Array.from(element.classList).join('.')
     const tagName = element.tagName.toLowerCase()
     const viewName = element.tagInfo.view.match(/[^/\\]+?$/)![0]
@@ -317,8 +314,12 @@ export class ElementIndicator {
       ],
     })
     this.popper.update()
+  }
 
-    this.show()
+  setPopperEventListeners(enabled: boolean) {
+    this.popper.setOptions({
+      modifiers: [{ name: 'eventListeners', enabled }],
+    })
   }
 
   hide() {
@@ -335,14 +336,16 @@ export class ElementIndicator {
 
   enable() {
     this._enabled = true
-    document.body.classList.add('view-launcher-inspecting')
+    this.setPopperEventListeners(true)
+    this.update()
+    this.show()
   }
 
   disable() {
     this._enabled = false
     this.element = undefined
+    this.setPopperEventListeners(false)
     this.hide()
-    document.body.classList.remove('view-launcher-inspecting')
   }
 
   get enabled() {
