@@ -7,6 +7,7 @@ const EDITORS = {
   webstorm: 'phpstorm://open?file={path}&line={line}&column={column}',
   idea: 'idea://open?file={path}&line={line}&column={column}',
   vscode: 'vscode://file/{path}:{line}:{column}',
+  'vscode-wsl': 'vscode://', //vscode://vscode-remote/wsl+distro/path/to/file
   'vscode-insiders': 'vscode-insiders://file/{path}:{line}:{column}',
   atom: 'atom://core/open/file?filename={path}&line={line}&column={column}',
 }
